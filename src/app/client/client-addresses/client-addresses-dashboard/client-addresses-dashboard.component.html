@@ -1,0 +1,125 @@
+<div class="wrapper">
+
+
+  <!-- ClientCommonHeaderWrapper GOES HERE -->
+  <client-header-wrapper-selector></client-header-wrapper-selector>
+
+
+
+  <div class="profile-content section-nude">
+    <div class="container">
+
+
+      <!-- ClientProfileAvatar GOES HERE -->
+      <client-profile-avatar-selector></client-profile-avatar-selector>
+
+      <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+        <a routerLink="/account/addresses/new" class="btn btn-move-left btn-lg btn-danger btn-block btn-round ">
+          <i class="ti-plus"></i>
+          Προσθήκη νέας διεύθυνσης
+        </a>
+      </div>
+
+
+
+      <div class="row">
+
+
+        <div class="col-md-8">
+
+
+          <div class="col-md-6 col-sm-6" *ngFor="let address of clientAddressesArray">
+
+            <div class="space-top"></div>
+
+
+            <div class="card card-user card-with-shadow" data-background="color" data-color="client-addresses-custom-color">
+
+              <div class="image">
+                <img src="assets/img/apostagma.jpg" alt="..."/>
+              </div>
+
+              <div class="content">
+                <div class="author">
+                  <img class="avatar" src="assets/img/placeholder-red.png" alt="...">
+                  <h4 class="title">{{address.city}}</h4>
+                </div>
+                <p class="description text-center">
+                  {{address.street}}, {{address.streetNumber}}, {{address.postalCode}}
+                </p>
+                <p class="description text-center">{{address.state}}</p>
+              </div>
+              <div class="card-footer text-center">
+
+                <button (click)="setAddressIdForDeletion(address.id)" class="btn btn-move-left btn-danger btn-fill btn-icon" data-toggle="modal" data-target="#smallAlertModal">
+                  <i class="ti-trash"></i> Διαγραφή
+                </button>
+              </div>
+            </div> <!-- end card -->
+
+          </div>
+
+        </div>
+
+
+        <div class="col-md-4 col-sm-6">
+
+          <div class="space-top"></div>
+
+          <div class="card card-user card-with-shadow" data-background="color" data-color="blue">
+
+            <div class="header header-with-icon">
+              <div class="icon">
+                <i class="ti-location-pin"></i>
+              </div>
+            </div>
+
+            <div class="content text-center">
+              <a routerLink="/account/addresses/new"><h4 class="title">Πρόσθεσε διεύθυνση</h4></a>
+              <p class="description">
+                Τα στοιχεία της διεύθυνσής σου χρησιμοποιούνται αυστηρά
+                για την εξυπηρέτησή σου από την εταιρεία Courier και εντός της πλατφόρμας.
+              </p>
+            </div>
+
+            <div class="card-footer btn-center">
+                <a routerLink="/account/addresses/new" class="btn btn-default btn-round btn-fill">Νέα διεύθυνση</a>
+            </div>
+          </div> <!-- end card -->
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="space-top"></div>
+
+
+<!-- small modal -->
+<div class="modal fade" id="smallAlertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-small ">
+    <div class="modal-content">
+      <div class="modal-header no-border-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <h5>Είστε σίγουροι οτι θέλετε να διαγράψετε τη διεύθυνση;</h5>
+      </div>
+      <div class="modal-footer">
+        <div class="left-side">
+          <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Όχι</button>
+        </div>
+        <div class="divider"></div>
+        <div class="right-side">
+          <button (click)="deleteClientAddress(addressIDForDeletionGettedFromUI)" data-dismiss="modal" type="button" class="btn btn-danger btn-simple">
+            Ναί
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--    end small modal -->

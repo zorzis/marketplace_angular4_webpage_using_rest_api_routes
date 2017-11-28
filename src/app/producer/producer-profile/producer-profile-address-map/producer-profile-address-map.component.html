@@ -1,0 +1,18 @@
+<agm-map
+  [latitude]="marker.lat"
+  [longitude]="marker.lng"
+  [scrollwheel]="false"
+  [zoom]="zoom">
+
+  <styled-google-map-selector></styled-google-map-selector>
+
+  <agm-marker
+    [latitude]="marker.lat"
+    [longitude]="marker.lng"
+    [iconUrl]= "'assets/img/marker_distillery_48px.png'">
+
+  </agm-marker>
+
+</agm-map>
+
+

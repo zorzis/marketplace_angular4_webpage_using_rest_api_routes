@@ -1,0 +1,32 @@
+<div class="wrapper">
+
+
+  <!-- ClientCommonHeaderWrapper GOES HERE -->
+  <client-header-wrapper-selector></client-header-wrapper-selector>
+
+
+
+  <div class="profile-content section-nude">
+    <div class="container">
+
+
+      <!-- ClientProfileAvatar GOES HERE -->
+      <client-profile-avatar-selector></client-profile-avatar-selector>
+
+
+      <div>
+        <h4 class="text-success text-center">Καταχώρησε τη διεύθυνσή σου</h4>
+      </div>
+
+
+      <div class="row" *ngIf="client">
+
+        <div class="space-top"></div>
+
+        <router-outlet></router-outlet>
+
+      </div>
+
+    </div>
+  </div>
+</div>

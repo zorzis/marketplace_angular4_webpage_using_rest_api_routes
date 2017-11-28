@@ -1,0 +1,250 @@
+<div class="col-md-12 col-sm-12" *ngIf="order">
+
+  <h3>Η παραγγελία σου</h3>
+
+  <div class="row">
+
+    <div class="card card-user card-plain card-with-shadow card-filter"> <!--start card-->
+
+      <div class="row card card-with-shadow text-center order-single-orderID-title">
+        <h5>
+          <small class="text-justify card-text-order">
+            Αριθμός Παραγγελίας #: {{order.orderID}}
+          </small>
+        </h5>
+      </div>
+
+      <div class="content">
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+            <h4><small>Πρός</small></h4>
+
+            <h5>
+              <span *ngIf="order.clientDetails.orderClientGender === 'MALE'">
+                Κύριο
+              </span>
+              <span *ngIf="order.clientDetails.orderClientGender === 'FEMALE'">
+                Κυρία
+              </span>
+              {{order.clientDetails.orderClientLastName}} {{order.clientDetails.orderClientFirstName}},
+            </h5>
+
+            <p class="description">
+              {{order.clientAddressDetails.street}} {{order.clientAddressDetails.streetNumber}} {{order.clientAddressDetails.city}},
+            </p>
+            <p>
+              {{order.clientAddressDetails.state}}, {{order.clientAddressDetails.country}},
+            </p>
+            <p>Ταχ. Κωδ.: {{order.clientAddressDetails.postalCode}}</p>
+            <p>
+              Όροφος: {{order.clientAddressDetails.floor}}
+            </p>
+
+          </div>
+
+
+          <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+
+            <div>
+              <h5>
+                <small>
+                  Ημ/νία Παραγγελίας:
+                  <strong>
+                    {{formatDateToGreeceTimezone(order.dateOrderPlaced) | date:'dd MMMM yyyy - HH : mm : ss'}}
+                  </strong>
+                </small>
+              </h5>
+            </div>
+
+
+            <div>
+              <h4><small>Τρόπος Πληρωμής</small></h4>
+
+              <div class="row text-producer-profile-sidebar" >
+                <div class="col-md-3">
+                  <h5 *ngIf="isPaymentInstanceOfPaypalPayment()" class="text-justify card-text-order">
+                   Paypal
+                  </h5>
+                  <h5 *ngIf="isPaymentInstanceOfOnDeliveryPayment()" class="text-justify card-text-order">
+                    Αντικαταβολή
+                  </h5>
+                </div>
+
+                <div class="col-md-3 col-md-offset-6">
+                  <i  *ngIf="isPaymentInstanceOfPaypalPayment()" class="fa fa-cc-paypal fa-3x"></i>
+                  <i  *ngIf="isPaymentInstanceOfOnDeliveryPayment()" style="font-size: xx-large" class="ti ti-wallet"></i>
+                </div>
+              </div>
+
+
+
+              <div *ngIf="isPaymentInstanceOfPaypalPayment()"><!--PAYPAL PAYMENT ENDS-->
+                <span style="font-size: small">
+                Paypal Transaction ID #:
+                </span>
+                  <br/>
+                  <span style="font-size: small">
+                  <strong>{{paymentPaypal.paypalTransactionNo}}</strong>
+                </span>
+
+                <hr>
+
+                <span style="font-size: small">
+                 Paypal Payment ID #:
+                </span>
+                  <br/>
+                  <span style="font-size: small">
+                  <strong>{{paymentPaypal.paypalApprovalPaymentID}}</strong>
+                </span>
+              </div><!--PAYPAL PAYMENT ENDS-->
+
+            </div>
+
+            <div>
+
+              <h4>
+                <small>
+                  Κατάσταση:
+                  <span *ngIf="order.orderStatusCode.orderStatusCode === 'paid'" class="btn btn-success btn-fill" style="border: none; border-radius: 0px;">
+                    Πληρώθηκε
+                  </span>
+
+                  <span *ngIf="!order.orderStatusCode.orderStatusCode === 'paid'" class="btn btn-success btn-fill" style="border: none; border-radius: 0px;">
+                    {{order.orderStatusCode.orderStatusCode}}
+                  </span>
+                </small>
+              </h4>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row invoice-products-section">
+          <div class="col-md-12">
+
+            <h5>
+              Τα προιόντα σας
+            </h5>
+
+            <div class="table-responsive">
+              <table class="table table-responsive">
+                <thead>
+                <tr>
+                  <th class="text-left" style="font-size: small">SKU #</th>
+                  <th class="text-left" style="font-size: small">Παραγωγός</th>
+                  <th class="text-left" style="font-size: small">Κατηγορία</th>
+                  <th class="text-left" style="font-size: small">Ημρ/νία Παραγωγής</th>
+                  <th class="text-left" style="font-size: small">Οξύτητα%</th>
+                  <th class="text-left" style="font-size: small">Ελληνικό</th>
+                  <th class="text-left" style="font-size: small">Τιμή/Λίτρο</th>
+                  <th class="text-left" style="font-size: small">Ποσότητα (Λίτρα)</th>
+                  <th class="text-right" style="font-size: small">Υποσύνολο</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of order.orderProducts">
+
+                  <td class="td-product" style="font-size: x-small">
+                      {{product.productID}}
+                  </td>
+
+                  <td class="td-name">
+                    <a (click)="onClickProducer(order.producerDetails.producerID)" style="color: #2b669a; cursor: pointer">
+                      {{order.producerDetails.orderProducerFirstName}} {{order.producerDetails.orderProducerLastName}}
+                    </a>
+                  </td>
+
+                  <td class="td-product">
+                    <strong>
+                      {{product.orderProductCategoryName}}
+                    </strong>
+                  </td>
+
+                  <td class="text-left small">
+                    {{product.dateDistilled | date:"MMMM yyyy"}}
+                  </td>
+
+                  <td class="td-number">
+                    {{product.alcoholVolume}}
+                  </td>
+
+                  <td class="text-left small">
+                    <span *ngIf="product.hasAniseed">Με γλυκάνισσο</span>
+                    <span *ngIf="!product.hasAniseed">Χωρίς γλυκάνισσο</span>
+                  </td>
+
+                  <td class="td-number">
+                    {{product.orderProductPrice}}&euro;
+                  </td>
+                  <td class="td-quantity">
+                    {{product.orderProductQuantity}}
+                  </td>
+                  <td class="td-number text-right">{{calculateTotalProductPrice(product) | number : '1.2-2'}}&euro;</td>
+                </tr>
+
+
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-number text-right">
+                    <small>Συμπεριλαμβάνεται Φ.Π.Α 24%</small>
+                  </td>
+
+                  <td class="td-number text-right">
+                    <small style="font-size: small">{{ order.totalProductsTax | number : '1.2-2'}}&euro;</small>
+                  </td>
+
+
+                </tr>
+
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="td-total text-right">
+                    Σύνολο
+                  </td>
+
+                  <td class="td-total text-right">
+                    {{order.totalOrderPrice | number : '1.2-2'}}&euro;
+                  </td>
+
+
+                </tr>
+
+
+
+                </tbody>
+              </table>
+            </div>
+
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-footer btn-center">
+      </div>
+
+
+
+    </div> <!-- ends card -->
+
+  </div>
+
+</div>
+
+

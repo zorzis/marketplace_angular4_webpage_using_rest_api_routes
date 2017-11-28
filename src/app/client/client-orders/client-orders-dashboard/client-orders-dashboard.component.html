@@ -1,0 +1,88 @@
+<h1><small>Οι παραγγελίες μου</small></h1>
+
+
+<div class="table-responsive" *ngIf="isClientHasOrders()">
+  <table class="table table-responsive">
+    <thead>
+    <tr>
+      <th class="text-left">Κωδικός #</th>
+      <th class="text-left">Ημ/νία</th>
+      <th class="text-left">Παραγωγός</th>
+      <th class="text-left">Κατάσταση</th>
+      <th class="text-left">Σύνολο</th>
+      <th class="text-left"></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let order of ordersArray">
+
+      <td class="text-left small">
+        <a (click)="onClickOrder(order.orderID)" style="cursor: pointer; font-size: x-small; color: #3c3c3c">
+          {{order.orderID}}
+        </a>
+      </td>
+
+      <td class="text-left">
+        <strong>
+          {{formatDateToGreeceTimezone(order.dateOrderPlaced) | date:'dd MMMM yyyy - HH : mm : ss'}}
+        </strong>
+      </td>
+
+      <td class="text-left">
+        <a (click)="onClickProducer(order.producerDetails.producerID)" style="cursor: pointer; color: #D24D57">
+          {{order.producerDetails.orderProducerFirstName}}
+          {{order.producerDetails.orderProducerLastName}}
+        </a>
+      </td>
+
+
+      <td class="text-left">
+        <span class="orders-paid-text" *ngIf="order.orderStatusCode.orderStatusCode === 'paid'">
+          Πληρώθηκε
+        </span>
+        <span class="orders-inprogress-text" *ngIf="order.orderStatusCode.orderStatusCode === 'inProgress'">
+          Δεν ολοκληρώθηκε
+        </span>
+      </td>
+
+
+      <td class="text-left">
+        {{order.totalOrderPrice | number : '1.2-2'}}&euro;
+      </td>
+
+      <td class="text-left">
+        <i class="fa fa-cc-paypal fa-2x" *ngIf="order.orderPayment.paymentMethod.paymentMethodID === 'paypal' "></i>
+        <i style="font-size: xx-large" class="ti ti-wallet" *ngIf="order.orderPayment.paymentMethod.paymentMethodID === 'onDelivery' "></i>
+        <i class="fa fa-cc-visa text-primary" *ngIf="order.orderPayment.paymentMethod.paymentMethodID === 'visa' "></i>
+        <i class="fa fa-cc-mastercard text-warning" *ngIf="order.orderPayment.paymentMethod.paymentMethodID === 'mastercard' "></i>
+      </td>
+
+
+      <td class="text-left order-button">
+        <a (click)="onClickOrder(order.orderID)" class="btn btn-fill">
+          Λεπτομέρειες
+        </a>
+      </td>
+    </tr>
+
+
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-12 text-center" *ngIf="!isClientHasOrders()">
+
+  <div class="section section-nude">
+    <div class="container tim-container">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-primary">
+            Δεν έχετε πραγματοποιήσει κάποια παραγγελία
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

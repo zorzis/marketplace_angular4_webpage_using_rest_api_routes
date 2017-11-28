@@ -1,0 +1,28 @@
+<body class="search">
+
+<div class="wrapper">
+
+  <header-selector></header-selector>
+
+
+
+  <!-- ProducerCommonHeaderWrapper GOES HERE -->
+  <producer-header-wrapper-selector></producer-header-wrapper-selector>
+
+</div>
+
+<div class="wrapper">
+
+  <div class="main">
+
+    <producer-profile-address-map-selector *ngIf="producer" [producer]="producer"></producer-profile-address-map-selector>
+
+    <router-outlet></router-outlet>
+
+  </div>
+</div>
+
+
+<footer-selector></footer-selector>
+
+</body>

@@ -1,0 +1,161 @@
+<div class="section">
+
+    <div class="container container-tim">
+
+
+
+      <div class="col-md-3 col-sm-3" *ngIf="producerFromProfile">
+
+        <div class="row">
+
+
+          <div class="card card-user card-plain card-with-shadow card-filter">
+            <div class="image image-plain"></div>
+            <div class="content">
+
+                <div class="author ">
+                  <img *ngIf="producerFromProfile.gender === 'MALE'" class="avatar" src="assets/img/user_male.png" alt="..."/>
+                  <img *ngIf="producerFromProfile.gender === 'FEMALE'" class="avatar" src="assets/img/user_female.png" alt="..."/>
+
+                  <h5 class="text-producer-profile-sidebar">
+                    {{producerFromProfile.firstName}} {{producerFromProfile.lastName}}
+                  </h5>
+
+                  <br />
+                  <small class="filter-title">
+                    <i class="fa fa-calendar-o icon-warning"></i>
+                    Έτος Γέννησης:
+                    {{producerFromProfile.birthDate | date: 'yyyy'}}
+                  </small>
+
+                </div>
+
+              <hr>
+
+                <div class="name text-center">
+
+                  <h4>
+                    <i class="fa fa-map-marker icon-warning"></i>
+
+                    <small>
+                      {{producerFromProfile.producerAddress.city}},
+                      {{producerFromProfile.producerAddress.street}},
+                      {{producerFromProfile.producerAddress.state}},
+                      {{producerFromProfile.producerAddress.postalCode}}
+                    </small>
+                  </h4>
+                </div>
+
+
+              <hr>
+
+              <div class="name text-center">
+
+                <h4>
+                  <i class="fa fa-euro icon-warning"></i>
+                  <small>Δέχεται πληρωμές με</small>
+                  <a class="btn btn-md btn-default btn-simple btn-magnify" *ngFor="let producerPaymentMethod of producerFromProfile.producerPaymentMethods">
+                    <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'paypal' " class="fa fa-cc-paypal fa-2x text-info"></i>
+                    <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'visa' " class="fa fa-cc-visa fa-2x text-primary"></i>
+                    <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'mastercard' " class="fa fa-cc-mastercard fa-2x text-warning"></i>
+                    <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'onDelivery' " class="fa fa fa-truck fa-2x text-danger"></i>
+                  </a>
+                </h4>
+              </div>
+
+              <hr>
+
+
+            </div>
+
+
+            <div class="card-footer text-center">
+              <button class="btn btn-default btn-round btn-fill btn-icon btn-move-left">
+                <i class="fa fa-heart"></i>
+                Αγαπημένος
+              </button>
+            </div>
+          </div> <!-- end card -->
+
+        </div>
+
+      </div>
+
+
+
+      <div class="col-md-9 col-sm-9" *ngIf="producerFromProfile">
+
+        <div class="col-md-12" *ngFor="let spirit of spiritArray">
+          <div class="card card-product card-with-shadow">
+
+            <div class="content">
+
+
+              <div class="row">
+
+                <div class = "col-md-8">
+                  <div class="row">
+                    <div class="row">
+                      <div class="col-md-4 spirit-hasAniseed-text" *ngIf="spirit.productDetails.hasAniseed">
+                        <h3 class="aniseed-text">{{spirit.productCategory.categoryName}}</h3>
+
+                        <h5 class="description aniseed-text">Ελληνικό</h5>
+                      </div>
+                      <div class="col-md-4 spirit-noAniseed-text" *ngIf="!spirit.productDetails.hasAniseed">
+                        <h3 class="aniseed-text">{{spirit.productCategory.categoryName}}</h3>
+
+                        <h5 class="description aniseed-text">Όχι ελληνικό</h5>
+                      </div>
+                      <div class="col-md-8 col-sm-8 text-right">
+                        <h5 class="alcohol-volume"><small>Ημ/νία Παραγωγής: {{spirit.productDetails.dateDistilled |  date:"MMMM yyyy"}}</small></h5>
+
+                        <h5 class="number alcohol-volume">
+                          {{spirit.productDetails.alcoholVolume}} % vol
+                        </h5>
+                      </div>
+                    </div>
+
+                  </div>
+
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h5 class="description"><small>Ονομασία: </small> <b>{{spirit.productName}}</b></h5>
+                        <h5 class="description"><small>Περιγραφή: {{spirit.productDetails.productDescription}}</small> </h5>
+                        <h5 class="description"><small>SKU: {{spirit.productID}}</small></h5>
+                      </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 text-center filter-section spirit-card-left-border">
+                  <h5 class="author"><small>Απόθεμα:</small> <a class="btn-filter-section btn btn-fill btn-xs"><b class="currency">{{spirit.quantity}} Λίτρα</b></a></h5>
+
+                  <h5>Τιμή Λίτρου</h5>
+                  <h4><strong>{{spirit.productDetails.price}}</strong><b class="currency">&euro;</b></h4>
+
+                  <button (click)="addProductToShopingCart(spirit)" class="btn-filter-section btn btn-md btn-fill btn-icon btn-magnify">
+                    <i class="fa fa-shopping-cart"></i>
+                    Προσθήκη στο καλάθι
+                  </button>
+                </div>
+
+              </div>
+
+
+
+            </div>
+
+
+          </div> <!-- end card -->
+
+          <hr>
+
+        </div>
+
+
+      </div>
+
+  </div>
+
+</div>

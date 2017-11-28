@@ -1,0 +1,76 @@
+<div class="wrapper">
+
+
+  <!-- ClientCommonHeaderWrapper GOES HERE -->
+  <client-header-wrapper-selector></client-header-wrapper-selector>
+
+
+
+  <div class="profile-content section-nude">
+    <div class="container">
+
+
+      <!-- ClientProfileAvatar GOES HERE -->
+      <client-profile-avatar-selector></client-profile-avatar-selector>
+
+
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3" *ngIf="client">
+
+          <form (ngSubmit)="onClientProfileUpdate()" #clientUpdateProfileForm="ngForm" class="settings-form">
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Όνομα</label>
+                  <input [(ngModel)]="clientFirstNameForUpdate" name="firstName" type="text" class="form-control border-input" placeholder="Όνομα">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Επώνυμο</label>
+                  <input [(ngModel)]="clientLastNameForUpdate" name="lastName" type="text" class="form-control border-input" placeholder="Επώνυμο">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Email</label>
+              <input value="{{client.email}}" type="text" class="form-control border-input" disabled="" placeholder="Email">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Ημερομηνία Γέννησης</label>
+                  <input  [(ngModel)]="clientBirthDateForUpdate" name="birthDate" type="text" class="datepicker form-control border-input" placeholder="Ημερομηνία Γέννησης">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Φύλο</label>
+                  <select  [(ngModel)]="clientGenderForUpdate" name="gender" class="selectpicker" data-style="btn-info btn-block" data-style="form-control" data-menu-style="dropdown-danger">
+                    <option disabled selected> Επιλέξτε Φύλο</option>
+                    <option value="MALE">Άνδρας </option>
+                    <option value="FEMALE">Γυναίκα</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                <button type="submit" class="btn btn-block btn-info">Ενημέρωση</button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

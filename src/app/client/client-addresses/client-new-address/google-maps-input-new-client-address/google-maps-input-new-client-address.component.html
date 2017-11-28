@@ -1,0 +1,87 @@
+<div *ngIf="!isConfirmationCheckoutEnabled()">
+  <div class="col-md-6 col-md-offset-1 col-sm-6">
+    <div class="card card-user card-with-shadow" data-background="color" data-color="blue">
+
+      <div class="content">
+
+        <div class="author">
+          <img class="avatar" src="assets/img/placeholder-alt.png" alt="...">
+        </div>
+
+        <agm-map
+          [latitude]="latitude"
+          [longitude]="longitude"
+          [scrollwheel]="false"
+          [zoom]="zoom">
+
+          <styled-google-map-selector></styled-google-map-selector>
+
+
+          <agm-marker
+            [latitude]="latitude"
+            [longitude]="longitude">
+
+          </agm-marker>
+
+        </agm-map>
+
+      </div>
+
+      <div class="card-footer text-center">
+        <a routerLink="/account/addresses" class="btn btn-move-left btn-block btn-warning btn-fill btn-icon">
+          <i class="ti-arrow-left"></i>
+          Πίσω
+        </a>
+      </div>
+
+    </div>
+  </div >
+
+  <div class="col-md-4 col-sm-6">
+    <div class="card card-user card-with-shadow">
+
+
+      <div class="content">
+        <div class="author">
+          <img class="avatar" src="assets/img/placeholder-red.png" alt="...">
+          <h4 class="title">Αναζήτηση διεύθυνσης</h4>
+        </div>
+        <p class="google-maps-info-text">
+          <b>Ακολούθησε τη μορφή: ΟΔΟΣ ΑΡΙΘΜΟΣ ΠΟΛΗ π.χ. Μιχαλακοπούλου 64, Αθήνα</b>
+        </p>
+
+        <div class="form-group">
+          <div class="input-group border-input">
+            <input placeholder="Αναζήτησε διεύθυνση" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control border-input" #search [formControl]="searchControl">
+            <span class="input-group-addon">
+          <button (click)="clearGoogleAutocompleteAPISearchFormInput()" class="btn btn-xs btn-magnify btn-icon btn-fill btn-danger">
+            <i class="ti-close"></i>
+          </button>
+        </span>
+          </div>
+        </div>
+
+        <button (click)="passAddressToSharedService()" [disabled]="!isAddressExists()" class="btn btn-move-left btn-block btn-default btn-fill btn-icon">
+          <i class="ti-check"></i>
+          Επιβεβαίωση διεύθυνσης
+        </button>
+
+      </div>
+      <div class="card-footer text-center">
+        <div class="space-top"></div>
+
+        <span class="text-center">
+      <p>Δεν βρέθηκε η διεύθυνσή σου;</p>
+    </span>
+        <button (click)="passConfirmationToSharedService()" class="btn btn-move-left btn-sm btn-wd btn-warning btn-fill btn-icon">
+          <i class="ti-location-pin"></i>
+          Πάτα εδώ και συμπλήρωσέ την
+        </button>
+      </div>
+    </div> <!-- end card -->
+  </div>
+</div>
+
+<confirm-google-maps-input-new-client-address-selector></confirm-google-maps-input-new-client-address-selector>
+
+

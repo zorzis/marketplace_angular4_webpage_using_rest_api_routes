@@ -1,0 +1,49 @@
+<div class="profile-avatar">
+    <li class="dropdown">
+      <a href="#" class="profile-photo dropdown-toggle" data-toggle="dropdown">
+        <div class="profile-photo-small">
+          <img src="assets/img/user.png" alt="Client Avatar Profile" class="img-circle img-responsive img-no-padding">
+        </div>
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-right dropdown-wide">
+        <li class="dropdown-header info">
+
+          {{authenticatedUser.email}}
+
+        </li>
+        <li class="divider"></li>
+        <li routerLinkActive="active"[routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/account">Πίνακας ελέγχου</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/account/profile">Το Προφίλ μου</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/account/orders">Οι παραγγελίες μου</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/account/fav_producers">Αγαπημένοι πωλητές</a>
+        </li>
+        <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/account/addresses">Οι διευθύνσεις μου</a>
+        </li>
+        <li class="divider"></li>
+        <li><a href="#"(click)="logOut()">Αποσύνδεση</a></li>
+        <li class="dropdown-footer">
+          <ul class="dropdown-footer-menu">
+            <li>
+              <a href="http://www.haze.gr">haze.gr</a>
+            </li>
+            <li>
+              <a href="#">Όροι χρήσης</a>
+            </li>
+            <li>
+              <a href="#">Απόρρητο</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+</div>

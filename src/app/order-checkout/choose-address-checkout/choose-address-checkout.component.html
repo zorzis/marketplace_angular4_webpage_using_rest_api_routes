@@ -1,0 +1,209 @@
+<div class="section">
+  <div class="container container-tim">
+
+    <div class="row">
+
+      <div class="col-md-8 col-sm-8" *ngIf="cartItemsCounter > 0">
+
+
+        <h3 class="text-center">
+          <i class="ti ti-user"> </i>
+          Στοιχεία Πελάτη
+        </h3>
+
+        <div class="row" *ngIf="cartItemsCounter > 0">
+
+            <div class="card card-with-shadow" data-radius="none">
+
+              <div class="alert alert-warning">
+                <div class="container">
+                  <p class="text-center text-success">
+                    <i class="fa fa-user "></i>
+                    Τα συγκεκριμένα στοιχεία θα χρησιμοποιηθούν για την αποστολή της παραγγελίας σας
+                  </p>
+                </div>
+              </div>
+
+              <div class="content">
+                <p class="description">Όνομα - <strong>{{authenticatedUser.firstName}}</strong></p>
+                <p class="description"> Επώνυμο - <strong>{{authenticatedUser.lastName}}</strong></p>
+                <p class="description">Email - <strong>{{authenticatedUser.email}}</strong></p>
+              </div>
+
+            </div> <!-- end card -->
+
+        </div>
+
+        <h3 class="text-center">
+          <i class="ti ti-map-alt"></i>
+          Διεύθυνση Αποστολής
+        </h3>
+
+        <hr>
+
+        <div class="row" *ngFor="let address of clientAddressesArray">
+
+          <div class="card checkout-address-card card-with-shadow">
+
+
+            <div class="alert alert-warning" *ngIf="checkChosenAddressVSAddressesOnUI(address) === true">
+              <div class="container">
+                <p class="text-center text-success">
+                  <i class="ti ti-map-alt"></i>
+                  Η διεύθυνση έχει οριστεί ως διεύθυνση αποστολής!
+                </p>
+              </div>
+            </div>
+
+            <div class="content">
+              <h4 class="title sc-checkout-address-title">{{address.city}} - {{address.state}} - Ταχ.Κωδ: {{address.postalCode}}</h4>
+              <p class="description sc-checkout-address-description">
+                {{address.city}}, {{address.street}} {{address.streetNumber}}, Ταχ.Κωδ: {{address.postalCode}}, {{address.state}}, {{address.country}}, Όροφος: {{address.floor}}
+              </p>
+            </div>
+
+
+            <div class="card-footer btn-center order-button">
+              <button [disabled]="checkChosenAddressVSAddressesOnUI(address)" (click)="onChooseAddressForOrder(address)" class="btn btn-sm btn-default btn-round btn-fill btn-modern">
+                Επιλογή Διέυθυνσης
+              </button>
+            </div>
+          </div> <!-- end card -->
+
+          <hr>
+        </div>
+
+
+      </div>
+
+      <div class="col-md-4 col-sm-4" *ngIf="cartItemsCounter > 0">
+
+        <h3 class="text-center">
+          <i class="ti ti-shopping-cart"> </i>
+          Σύνοψη καλαθιού
+        </h3>
+
+        <div class="card card-with-shadow">
+          <div class="header header-with-icon">
+            <div class="icon">
+              <i class="ti-shopping-cart"></i>
+            </div>
+          </div>
+          <div class="content text-center">
+
+            <div>
+              <h5 class="title">
+                <a [routerLink]="['/producer', cart.shopingCartProducerOwnsTheProducts.producerID]">
+                  <i class="ti-user"> </i>
+                  Παραγωγός: {{cart.shopingCartProducerOwnsTheProducts.firstName}} {{cart.shopingCartProducerOwnsTheProducts.lastName}}
+                </a>
+              </h5>
+            </div>
+
+
+            <hr>
+
+            <div class="description" *ngFor="let cartItem of cart.shopingCartItems">
+
+              <strong>
+                <p class="text-success">
+
+                  <i class="ti ti-heart"> </i>
+                  {{cartItem.productName}}
+                </p>
+              </strong>
+
+              <small>
+                <p>
+                  <i class="ti ti-archive"> </i>
+                  Κατηγορία: <strong>{{cartItem.categoryName}}</strong>
+                </p>
+              </small>
+
+              <br>
+
+              <p>
+                <strong>{{cartItem.orderProductQuantity}}</strong>x Λίτρα:
+              </p>
+              <p>
+                <small>Υποσύνολο: </small><strong>{{cartItem.totalPrice}} &euro;</strong>
+              </p>
+              <hr>
+            </div>
+
+            <p class="description">
+              <small>
+                <strong>+ Φ.Π.Α 24%: {{ cart.tax | number : '1.2-2'}} &euro; </strong>
+              </small>
+            </p>
+
+            <h4>
+              <strong>Σύνολο: {{cart.totalCartPrice | number : '1.2-2'}} &euro;</strong>
+            </h4>
+            <hr>
+
+
+          </div>
+
+
+          <div class="card-footer btn-center text-center order-button">
+
+            <p class="description" >
+              <strong>
+                <i class="ti ti-location-pin"></i>
+                Διεύθυνση Αποστολής:
+              </strong>
+            </p>
+
+            <div class="alert alert-danger" *ngIf="!checkIfAddressIsSelected()">
+              <div class="container">
+                <p class="text-center">
+
+                  <span>
+                    <i class="ti ti-face-sad"></i>
+                    Δεν έχετε επιλέξει διεύθυνση
+                  </span>
+                </p>
+              </div>
+            </div>
+
+
+
+            <div class="alert alert-success" *ngIf="checkIfAddressIsSelected()">
+              <div class="container">
+                <p class="text-center">
+
+                  <span>
+                    {{chosenAddressToProcedeOrderCheckout.city}}, {{chosenAddressToProcedeOrderCheckout.street}} {{chosenAddressToProcedeOrderCheckout.streetNumber}}, Ταχ.Κωδ: {{chosenAddressToProcedeOrderCheckout.postalCode}}, {{chosenAddressToProcedeOrderCheckout.state}}, {{chosenAddressToProcedeOrderCheckout.country}}, Όροφος: {{chosenAddressToProcedeOrderCheckout.floor}}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <button (click)="onContinueToPaymentOrder()" [disabled]="!checkIfAddressIsSelected()" class="btn btn-block btn-fill btn-icon btn-move-left">
+              <i class="fa fa-chevron-circle-right"></i>
+              Επόμενο
+            </button>
+          </div>
+
+          <div class="card-footer btn-center text-success text-center">
+
+            <a routerLink="/order">
+              <i class="ti ti-shopping-cart"></i>
+              Επιστροφή στο καλάθι
+            </a>
+
+          </div>
+
+
+        </div> <!-- end card -->
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>

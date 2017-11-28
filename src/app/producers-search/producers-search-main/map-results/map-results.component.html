@@ -1,0 +1,31 @@
+<div class="card card-with-shadow" data-background="color" data-color="blue">
+
+  <div class="container-fluid">
+    <agm-map
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [scrollwheel]="false"
+      [zoom]="zoom"
+      [disableDefaultUI]="true">
+
+      <styled-google-map-selector></styled-google-map-selector>
+
+
+      <agm-marker *ngFor="let p of filteredProducersResults"
+                  [latitude]="convertStringToNumber(p.producerAddress.latitude)"
+                  [longitude]="convertStringToNumber(p.producerAddress.longitude)"
+                  [markerDraggable]="false">
+        <agm-info-window>
+          <google-maps-producer-info-modal-window-selector [producer]="p" [spiritArray]="p.products"></google-maps-producer-info-modal-window-selector>
+        </agm-info-window>
+
+      </agm-marker>
+
+
+    </agm-map>
+
+  </div>
+
+</div>
+
+

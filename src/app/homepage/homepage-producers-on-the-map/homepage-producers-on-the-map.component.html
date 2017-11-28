@@ -1,0 +1,23 @@
+<agm-map
+  [latitude]="latitude"
+  [longitude]="longitude"
+  [scrollwheel]="false"
+  [zoom]="zoom"
+  [disableDefaultUI]="true">
+
+  <styled-google-map-selector></styled-google-map-selector>
+
+  <agm-marker *ngFor="let p of producersArray"
+    [latitude]="convertStringToNumber(p.producerAddress.latitude)"
+    [longitude]="convertStringToNumber(p.producerAddress.longitude)"
+    [markerDraggable]="false">
+
+
+
+  <agm-info-window>
+      <google-maps-producer-info-window-selector [producer]="p" [spiritArray]="p.products"></google-maps-producer-info-window-selector>
+    </agm-info-window>
+
+  </agm-marker>
+
+</agm-map>

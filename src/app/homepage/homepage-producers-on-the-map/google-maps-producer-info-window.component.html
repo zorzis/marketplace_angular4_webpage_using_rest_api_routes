@@ -1,0 +1,78 @@
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="twitter-profile-tweets">
+    <div class="col-md-12">
+
+      <div class="tweets">
+        <div class="media">
+          <a [routerLink]="['/producer', producer.producerID]" class="pull-left">
+            <div class="avatar">
+              <img *ngIf="producer.gender === 'MALE'" class="avatar" src="assets/img/user_male.png" alt="..."/>
+              <img *ngIf="producer.gender === 'FEMALE'" class="avatar" src="assets/img/user_female.png" alt="..."/>
+            </div>
+          </a>
+          <div class="media-body">
+            <strong>{{producer.lastName}} {{producer.firstName}} </strong>
+            <h5 class="media-heading">
+              <small>
+                <i class="fa fa-calendar-o icon-warning"></i>
+                Έτος Γέννησης:
+                {{producer.birthDate | date: 'yyyy'}}
+              </small>
+            </h5>
+            <p>
+              <i class="fa fa-map-marker icon-warning"></i>
+              {{producer.producerAddress.city}},
+              {{producer.producerAddress.street}},
+              {{producer.producerAddress.state}},
+              {{producer.producerAddress.postalCode}}
+            </p>
+
+
+            <br/>
+            <p>Δέχεται Πληρωμή με:</p>
+            <div class="media-footer">
+              <a class="btn btn-md btn-default btn-simple btn-magnify" *ngFor="let procuerPaymentMethod of producer.producerPaymentMethods">
+                <i *ngIf="procuerPaymentMethod.paymentMethod.paymentMethodID === 'paypal' " class="fa fa-cc-paypal fa-2x text-info"></i>
+                <i *ngIf="procuerPaymentMethod.paymentMethod.paymentMethodID === 'visa' " class="fa fa-cc-visa fa-2x text-primary"></i>
+                <i *ngIf="procuerPaymentMethod.paymentMethod.paymentMethodID === 'mastercard' " class="fa fa-cc-mastercard fa-2x text-warning"></i>
+                <i *ngIf="procuerPaymentMethod.paymentMethod.paymentMethodID === 'onDelivery' " class="fa fa fa-truck fa-2x text-danger"></i>
+              </a>
+            </div>
+
+            <br/>
+            <br/>
+
+            <div class="media-body" *ngIf="spiritArray.length === 0;">
+              <strong class="text-muted text-danger">
+                O {{producer.firstName}} δεν έχει διαθέσιμα προιόντα αυτή τη στιγμή  :(
+              </strong>
+            </div>
+
+            <div class="media-body" *ngIf="spiritArray.length > 0;">
+              <strong class="text-muted text-success">
+                O {{producer.firstName}} έχει διαθέσιμα προιόντα αυτή τη στιγμή  :)
+              </strong>
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="col-md-4 col-md-offset-4 col-sm-12 col-xs-12">
+  <div class="twitter-profile-tweets">
+      <button (click)="onSelect(producer)" class="btn-google-maps-modal btn btn-move-left btn-lg btn-fill btn-icon">
+        <i class="ti ti-user"></i>
+        Άνοιγμα Προφίλ
+      </button>
+  </div>
+</div>

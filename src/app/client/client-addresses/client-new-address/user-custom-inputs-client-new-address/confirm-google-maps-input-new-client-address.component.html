@@ -1,0 +1,143 @@
+<div *ngIf="isConfirmationCheckoutEnabled()">
+
+  <div class="col-md-6  col-sm-6">
+    <div class="card card-user card-with-shadow" data-background="color" data-color="blue">
+
+      <div class="content">
+
+        <div class="author">
+          <img class="avatar" src="assets/img/placeholder-alt.png" alt="...">
+        </div>
+
+        <agm-map
+          [latitude]="marker.lat"
+          [longitude]="marker.lng"
+          [scrollwheel]="false"
+          [zoom]="zoom">
+
+          <styled-google-map-selector></styled-google-map-selector>
+
+          <agm-marker
+            [latitude]="marker.lat"
+            [longitude]="marker.lng"
+            [markerDraggable]="marker.draggable"
+            (dragEnd)="getLocationFromDraggableMarkerMovement($event)">
+
+          </agm-marker>
+
+        </agm-map>
+
+      </div>
+
+      <div class="card-footer text-center">
+        <a routerLink="/account/addresses" class="btn btn-move-left btn-block btn-warning btn-fill btn-icon">
+          <i class="ti-arrow-circle-left"></i>
+          Πίσω
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-6">
+    <div class="card card-user card-with-shadow">
+
+      <div class="content">
+
+        <div class="author">
+          <img class="avatar" src="assets/img/placeholder-red.png" alt="...">
+          <h4 class="title">Επιλογή διεύθυνσης</h4>
+          <div class="alert alert-warning alert-with-icon">
+            <div class="container text-center">
+              <div class="container">
+                <span data-notify="icon" class="ti-info"></span>
+                <span data-notify="message">
+                  Σύρτε την πινέζα στην επιθυμητή τοποθεσία πάνω στο χάρτη.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form (ngSubmit)="onCreateNewAddress()" #createNewClientAddressForm="ngForm" class="settings-form">
+
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+              <div class="form-group">
+                <label>Νομός</label>
+                <input [(ngModel)]="clientAddressFieldState" name="state" type="text" class="form-control border-input" placeholder="Νομός">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+              <div class="col-md-8 col-sm-8">
+                <div class="form-group">
+                  <label>Οδός</label>
+                  <input [(ngModel)]="clientAddressFieldStreet" name="street" type="text" class="form-control border-input" placeholder="Οδός">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="form-group">
+                  <label>Αριθμός</label>
+                  <input [(ngModel)]="clientAddressFieldStreetNumber" name="streetNumber" type="text" class="form-control border-input" placeholder="Διεύθυνση">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Πόλη</label>
+                  <input [(ngModel)]="clientAddressFieldCity" name="city" type="text" class="form-control border-input"  placeholder="Πόλη">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Ταχ. Κωδικός</label>
+                  <input  [(ngModel)]="clientAddressFieldPostalCode" name="postalCode" type="text" class="form-control border-input" placeholder="Ταχ. Κωδικός">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Χώρα</label>
+                  <input  [(ngModel)]="clientAddressFieldCountry" name="country" type="text" class="form-control border-input" placeholder="Χώρα">
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                  <label>Όροφος</label>
+                  <input [(ngModel)]="clientAddressFieldFloor" name="floor" type="text" class="form-control border-input" placeholder="Οροφος">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card-footer text-center">
+            <div class="col-md-12 col-md-offset-0 col-sm-12 col-sm-offset-0">
+              <button type="submit" class="btn btn-move-left btn-block btn-default btn-fill btn-icon">
+                <i class="ti-check"></i>
+                Προσθήκη
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+
+    </div> <!-- end card -->
+
+  </div>
+</div>
+

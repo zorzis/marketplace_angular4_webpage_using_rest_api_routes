@@ -1,0 +1,57 @@
+<div class="row owner" *ngIf="producerFromAvatar">
+  <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
+    <div class="avatar">
+      <img src="assets/img/producer_male_old.png" alt="Circle Image" class="img-circle img-responsive">
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="producerFromAvatar">
+  <div class="col-md-6 col-md-offset-3 text-center">
+
+    <button href="#" class="btn btn-danger btn-fill btn-icon btn-magnify" rel="tooltip" title="Αγαπημένος">
+      <i class="fa fa-heart"></i>
+      Προσθήκη
+    </button>
+
+    <div class="name">
+      <h4>{{producerFromAvatar.firstName}} {{producerFromAvatar.lastName}}
+        <br />
+        <small>
+          <i class="fa fa-calendar-o icon-warning"></i>
+          Έτος Γέννησης:
+          {{producerFromAvatar.birthDate | date: 'yyyy'}}
+        </small>
+      </h4>
+    </div>
+
+    <a class="btn btn-md btn-default btn-simple btn-magnify" *ngFor="let producerPaymentMethod of producerFromAvatar.producerPaymentMethods">
+      <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'paypal' " class="fa fa-cc-paypal fa-2x text-info"></i>
+      <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'visa' " class="fa fa-cc-visa fa-2x text-primary"></i>
+      <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'mastercard' " class="fa fa-cc-mastercard fa-2x text-warning"></i>
+      <i *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'onDelivery' " class="fa fa fa-truck fa-2x text-danger"></i>
+    </a>
+
+  </div>
+</div>
+
+<div class="nav-tabs-navigation" *ngIf="producerFromAvatar">
+  <div class="nav-tabs-wrapper">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]="['/producer', producerFromAvatar.producerID]">Προφίλ</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]="['/producer', producerFromAvatar.producerID, 'spirits']">Αποστάγματα</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a [routerLink]="['/producer', producerFromAvatar.producerID, 'reviews']">Αξιολογήσεις</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!--
+<div class="space-top"></div>
+-->
+

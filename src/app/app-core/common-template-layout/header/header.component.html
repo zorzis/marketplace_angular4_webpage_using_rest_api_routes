@@ -1,0 +1,54 @@
+<nav class="navbar navbar-haze-flat">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a routerLink="/" routerLinkActive="active">
+        <div class="logo-container">
+          <div class="logo">
+            <img src="assets/img/logo.png" alt="haze.gr logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+
+      <ul class="nav navbar-nav haze-nav">
+        <li class="btn-haze-homepage">
+          <a routerLink="/" routerLinkActive="active" class="btn btn-icon btn-fill" data-toggle="dropdown">Αρχική</a>
+        </li>
+      </ul>
+
+      <ul class="haze-nav nav navbar-nav navbar-right">
+
+        <!-- header-shoping-cart GOES HERE -->
+        <li class="btn-haze-homepage">
+          <shoping-cart-selector></shoping-cart-selector>
+        </li>
+
+        <!-- auth links GOES HERE -->
+        <li *ngIf="!authService.isUserAuthenticated()">
+          <a routerLink="/auth" routerLinkActive="active" class="">Σύνδεση</a>
+        </li>
+        <li *ngIf="!authService.isUserAuthenticated()">
+          <a routerLink="/registration" routerLinkActive="active" class="">Εγγραφή</a>
+        </li>
+
+        <!-- header-logged-user-nav GOES HERE -->
+        <li class="dropdown">
+          <header-logged-user-nav-selector *ngIf="authService.isUserAuthenticated()"></header-logged-user-nav-selector>
+        </li>
+
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-->
+</nav>

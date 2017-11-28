@@ -1,0 +1,35 @@
+<div class="homepage-card">
+  <h3 class="title text-center">Ξεκίνα εδώ!</h3>
+
+
+      <div class="row">
+        <button *ngFor = "let cat of productCategories" (click)="onSelectSingleCategory(cat)" href="#" class="homepage-card-button btn btn-md btn-fill">
+          <span *ngIf="cat.categoryID === 'kali'"><small>Καλή</small></span>
+          <span *ngIf="cat.categoryID === 'metria'"><small>Μέτρια</small></span>
+          <span *ngIf="cat.categoryID === 'mikri'"><small>Μικρή</small></span>
+          <span *ngIf="cat.categoryID === 'fthini'"><small>Φθηνή</small></span>
+        </button>
+
+      </div>
+
+  <hr>
+
+
+  <div class="division">
+    <span>ή</span>
+
+    <div class="text text-center">
+      <h5>κάνε σύνθετη αναζήτηση με βάση την περιοχή</h5>
+    </div>
+
+    <div class="login">
+      <a routerLink="/search" routerLinkActive="active" type="submit" class="btn search-haze-btn btn-icon btn-magnify btn-fill btn-block">
+        <i class="fa fa-search"></i>
+        Βρές
+      </a>
+    </div>
+
+  </div>
+
+
+</div>

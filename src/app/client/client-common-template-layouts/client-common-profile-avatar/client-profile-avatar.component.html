@@ -1,0 +1,44 @@
+<div class="row owner">
+  <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
+
+    <div class="avatar">
+      <img src="assets/img/user.png" alt="Circle Image" class="img-circle img-responsive">
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 text-center client-profile-header">
+
+    <h5 class="label-client-profile-id">
+      {{authenticatedUser.email}}
+    </h5>
+
+  </div>
+</div>
+
+<div class="nav-tabs-navigation">
+  <div class="nav-tabs-wrapper">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a routerLink="/account">Πίνακας ελέγχου</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a routerLink="/account/profile">Προφίλ</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a routerLink="/account/orders">Παραγγελίες</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a routerLink="/account/fav_producers">Αγαπημένα</a>
+      </li>
+      <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <a routerLink="/account/addresses">Διευθύνσεις</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="space-top"></div>
+

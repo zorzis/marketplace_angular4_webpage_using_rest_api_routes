@@ -1,0 +1,228 @@
+<div class="container container-tim">
+
+  <div class="row">
+
+    <div class="col-md-8 col-sm-8" *ngIf="cartItemsCounter > 0">
+
+      <h3 class="text-center">
+        <i class="ti ti-receipt"> </i>
+        Σύνοψη Παραγγελίας
+      </h3>
+
+      <!-- Client Details-->
+      <div class="row">
+
+        <div class="card card-with-shadow" data-radius="none">
+
+          <div class="alert alert-warning">
+            <div class="container">
+              <p class="text-center text-success">
+                <i class="fa fa-user "></i>
+                Τα συγκεκριμένα στοιχεία θα χρησιμοποιηθούν για την αποστολή της παραγγελίας σας
+              </p>
+            </div>
+          </div>
+
+          <div class="content">
+            <p class="description">Όνομα - <strong>{{authenticatedUser.firstName}}</strong></p>
+            <p class="description"> Επώνυμο - <strong>{{authenticatedUser.lastName}}</strong></p>
+            <p class="description">Email - <strong>{{authenticatedUser.email}}</strong></p>
+          </div>
+
+        </div> <!-- end card -->
+
+      </div>
+
+      <hr>
+
+      <!-- Shipping Address Details -->
+      <h4 class="text-center">
+        <i class="ti ti-map-alt"></i>
+        Διεύθυνση Αποστολής
+      </h4>
+
+      <div class="row" *ngIf="cart.shipingAddress">
+
+        <div class="card card-with-shadow" data-radius="none">
+
+          <div class="alert alert-warning">
+            <div class="container">
+              <p class="text-center text-success">
+                <i class="ti ti-map-alt"></i>
+                Τα στοιχεία της διέυθυνσης που ορίσατε θα μεταβιβαστούν αυτόματα στην εταιρεία
+                <strong>courier</strong> που συνεργαζόμαστε. Μετά την ολοκλήρωση της παραγγελίας χρησιμοποιήστε τον αριθμό
+                ανίχνευσης για να ελέγξετε την πρόοδο της παραγγελίας σας!
+              </p>
+            </div>
+          </div>
+
+          <div class="content">
+            <h4 class="title">{{cart.shipingAddress.city}} - {{cart.shipingAddress.state}} - Ταχ.Κωδ: {{cart.shipingAddress.postalCode}}</h4>
+            <p class="description">
+              {{cart.shipingAddress.city}}, {{cart.shipingAddress.street}} {{cart.shipingAddress.streetNumber}}, Ταχ.Κωδ: {{cart.shipingAddress.postalCode}}, {{cart.shipingAddress.state}}, {{cart.shipingAddress.country}}, Όροφος: {{cart.shipingAddress.floor}}
+            </p>
+          </div>
+
+
+          <div class="card-footer btn-center">
+
+          </div>
+        </div> <!-- end card -->
+      </div>
+
+      <hr>
+
+      <!-- Payment Method Details -->
+      <h4 class="text-center">
+        Τρόπος Πληρωμής
+      </h4>
+
+
+      <div class="row" *ngIf="cart.paymentMethod">
+        <div class="card card-just-text card-with-shadow" data-radius="none">
+
+          <div class="alert alert-warning">
+            <div class="container">
+              <p class="text-center text-success">
+               Θα αποπληρώσετε την παραγγελία σας στην Courier κατά την παραλαβή του δέματός σας.
+                Δύναται να επιβαρυνθείτε με επιπλέον +2.00&euro;.
+              </p>
+            </div>
+          </div>
+
+          <div class="content">
+
+            <div class="pull-left billing-type-icon">
+              <i class="fa fa-cc-paypal fa-3x text-primary" *ngIf="cart.paymentMethod.paymentMethodID === 'paypal' "></i>
+              <i class="fa fa-truck fa-3x text-danger" *ngIf="cart.paymentMethod.paymentMethodID === 'onDelivery' "></i>
+              <i class="fa fa-cc-visa fa-3x text-info" *ngIf="cart.paymentMethod.paymentMethodID === 'visa' "></i>
+              <i class="fa fa-cc-mastercard fa-3x text-warning" *ngIf="cart.paymentMethod.paymentMethodID === 'mastercard' "></i>
+
+            </div>
+
+            <div class="pull-left billing-type-text">
+
+              <h4 class="title" *ngIf="cart.paymentMethod.paymentMethodID === 'paypal' ">
+                Paypal
+              </h4>
+
+              <h4 class="title" *ngIf="cart.paymentMethod.paymentMethodID === 'onDelivery' ">
+                Αντικαταβολή
+              </h4>
+
+              <h4 class="title" *ngIf="cart.paymentMethod.paymentMethodID === 'visa' ">
+                Visa
+              </h4>
+
+              <h4 class="title" *ngIf="cart.paymentMethod.paymentMethodID === 'mastercard' ">
+                Mastercard
+              </h4>
+            </div>
+
+          </div>
+
+        </div> <!-- end card -->
+
+      </div>
+
+
+    </div>
+
+    <div class="col-md-4 col-sm-4" *ngIf="cartItemsCounter > 0">
+
+      <h3 class="text-center">
+        <i class="ti ti-shopping-cart"> </i>
+        Σύνοψη καλαθιού
+      </h3>
+
+      <div class="card card-with-shadow">
+        <div class="header header-with-icon">
+          <div class="icon">
+            <i class="ti-shopping-cart"></i>
+          </div>
+        </div>
+        <div class="content text-center">
+          <div>
+            <h5 class="title">
+              <a [routerLink]="['/producer', cart.shopingCartProducerOwnsTheProducts.producerID]">
+                <i class="ti-user"> </i>
+                Παραγωγός: {{cart.shopingCartProducerOwnsTheProducts.firstName}} {{cart.shopingCartProducerOwnsTheProducts.lastName}}
+              </a>
+            </h5>
+          </div>
+
+          <hr>
+
+          <div class="description" *ngFor="let cartItem of cart.shopingCartItems">
+
+            <strong>
+              <p class="text-success">
+
+                <i class="ti ti-heart"> </i>
+                {{cartItem.productName}}
+              </p>
+            </strong>
+
+            <small>
+              <p>
+                <i class="ti ti-archive"> </i>
+
+                Κατηγορία: <strong>{{cartItem.categoryName}}</strong>
+              </p>
+            </small>
+
+            <br>
+
+            <p>
+              <strong>{{cartItem.orderProductQuantity}}</strong>x Λίτρα:
+            </p>
+            <p>
+              <small>Υποσύνολο: </small><strong>{{cartItem.totalPrice}} &euro;</strong>
+            </p>
+            <hr>
+          </div>
+
+          <p class="description">
+            <small>
+              <strong>+ Φ.Π.Α 24%: {{ cart.tax | number : '1.2-2'}} &euro; </strong>
+            </small>
+          </p>
+
+          <h4>
+            <strong>Σύνολο: {{cart.totalCartPrice | number : '1.2-2'}} &euro;</strong>
+          </h4>
+          <hr>
+
+
+        </div>
+
+
+        <div class="card-footer btn-center text-center">
+
+          <button (click)="onCreateCashOnDeliveryOrder()" class="btn btn-fill btn-danger btn-block">
+            Ολοκλήρωση Παραγγελίας
+          </button>
+
+        </div>
+
+        <div class="card-footer btn-center text-success text-center">
+
+          <a routerLink="/order">
+            <i class="ti ti-shopping-cart"></i>
+            Επιστροφή στο καλάθι
+          </a>
+
+        </div>
+
+
+      </div> <!-- end card -->
+
+
+    </div>
+
+
+  </div>
+
+
+</div>
+

@@ -1,0 +1,136 @@
+<div class="section section-nude">
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-md-8 col-sm-8" *ngIf="cartItemsCounter > 0">
+
+        <a [routerLink]="['/producer', cart.shopingCartProducerOwnsTheProducts.producerID]"class="btn btn-fill btn-primary btn-icon btn-magnify">
+          <i class="ti-user"> </i>
+          Παραγωγός: {{cart.shopingCartProducerOwnsTheProducts.firstName}} {{cart.shopingCartProducerOwnsTheProducts.lastName}}
+        </a>
+
+        <h4 *ngIf="cartItemsCounter === 1">Το καλάθι σου: {{cartItemsCounter}} αποστάγμα</h4>
+        <h4 *ngIf="cartItemsCounter > 1">Το καλάθι σου: {{cartItemsCounter}} αποστάγματα</h4>
+
+        <div class="table-responsive">
+          <table class="table table-shopping">
+            <thead>
+            <tr>
+              <th class="text-center">#</th>
+              <th>Κατηγορία</th>
+              <th>Ονομασία</th>
+              <th class="text-right">Τιμή ανά Λίτρο</th>
+              <th class="text-right">Ποσότητα(Λίτρα)</th>
+              <th class="text-right">Σύνολο</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cartItem of cart.shopingCartItems">
+
+              <td>
+                <div class="img-container">
+                  <img src="assets/img/barrel.png" alt="spirit_logo">
+                </div>
+              </td>
+
+              <td>{{cartItem.categoryName}}</td>
+              <td>{{cartItem.productName}}</td>
+
+              <td class="td-price">
+                {{cartItem.price}} <small>&euro; / Λίτρο </small>
+              </td>
+
+
+              <td class="td-number">
+                {{cartItem.orderProductQuantity}}
+                <div class="btn-group">
+                <button (click)="decreaseQuantity(cartItem)" class="btn btn-sm"> - </button>
+                <button (click)="increaseQuantity(cartItem)" class="btn btn-sm"> + </button>
+              </div>
+            </td>
+
+              <td class="text-right">{{cartItem.totalPrice}}&euro;</td>
+
+
+            </tr>
+
+
+              <tr>
+                <td colspan="2"></td>
+                <td></td>
+                <td></td>
+                <td class="td-total">
+                  Σύνολο
+                </td>
+
+                <td class="td-total">
+                  {{cart.totalCartPrice | number : '1.2-2'}} &euro;
+                </td>
+
+              </tr>
+
+              <tr>
+                <td colspan="2"></td>
+                <td></td>
+                <td></td>
+                <td class="td-total">
+                  <small>Συμπεριλαμβάνεται Φ.Π.Α 24%</small>
+                </td>
+
+                <td class="td-total">
+                  <small>{{ cart.tax | number : '1.2-2'}} &euro;</small>
+                </td>
+
+
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <div class="col-md-4 col-sm-4" *ngIf="cartItemsCounter > 0">
+
+        <div class="card card-with-shadow">
+          <div class="header header-with-icon">
+            <div class="icon">
+              <i class="ti-shopping-cart-full"></i>
+            </div>
+          </div>
+          <div class="content text-center">
+            <h4 class="title"><a href="#"> Μάλλον Πληρωμές εδώ</a></h4>
+            <p class="description">
+
+            </p>
+          </div>
+          <div class="card-footer btn-center text-center">
+            <button class="btn btn-warning btn-round btn-fill btn-icon btn-move-left">
+              <i class="fa fa-chevron-right"></i>
+              Ολοκλήρωση Παραγγελίας
+            </button>
+          </div>
+
+          <div class="card-footer btn-center text-success text-center">
+
+            <a routerLink="/order-checkout">
+              <i class="ti ti-shopping-cart"></i>
+              Επιστροφή στο καλάθι
+            </a>
+
+          </div>
+
+
+        </div> <!-- end card -->
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>

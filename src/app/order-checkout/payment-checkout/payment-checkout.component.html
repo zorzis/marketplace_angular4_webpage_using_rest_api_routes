@@ -1,0 +1,203 @@
+<div class="section" *ngIf="isOkToShowMainScreen()">
+  <div class="container container-tim">
+
+    <div class="row" *ngIf="cart.shipingAddress">
+
+      <div class="col-md-8 col-sm-8" *ngIf="cartItemsCounter > 0">
+
+
+        <h3 class="text-center">
+          Στοιχεία πληρωμής
+        </h3>
+
+
+        <div class="row" *ngFor="let producerPaymentMethod of cart.shopingCartProducerOwnsTheProducts.producerPaymentMethods">
+
+          <div class="card card-just-text" data-radius="none">
+
+
+            <div class="alert alert-warning" *ngIf="checkIfPaymentIsSelectedForAlert(producerPaymentMethod.paymentMethod)">
+              <div class="container">
+                <p class="text-center text-success">
+                  <i class="fa fa-money"></i>
+                  Έχει οριστεί ως ο τρόπος πληρωμής της παραγγελίας σας!
+                </p>
+              </div>
+            </div>
+
+
+            <div id="#billingOptions" class="content">
+
+               <div class="pull-left billing-type-icon">
+                 <i class="fa fa-cc-paypal fa-3x text-primary" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'paypal' "></i>
+                 <i class="fa fa-truck fa-3x text-danger" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'onDelivery' "></i>
+                 <i class="fa fa-cc-visa fa-3x text-info" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'visa' "></i>
+                 <i class="fa fa-cc-mastercard fa-3x text-warning" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'mastercard' "></i>
+
+               </div>
+
+               <div class="pull-left billing-type-text">
+
+                 <h4 class="title" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'paypal' ">
+                   Paypal
+                 </h4>
+
+                 <h4 class="title" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'onDelivery' ">
+                   Αντικαταβολή
+                 </h4>
+
+                 <h4 class="title" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'visa' ">
+                   Visa
+                 </h4>
+
+                 <h4 class="title" *ngIf="producerPaymentMethod.paymentMethod.paymentMethodID === 'mastercard' ">
+                   Mastercard
+                 </h4>
+               </div>
+
+               <div class="pull-right">
+                 <button [disabled]="checkIfPaymentIsSelectedForSelectPaymentButtons(producerPaymentMethod.paymentMethod)" (click)="onChoosePaymentMethodForOrder(producerPaymentMethod.paymentMethod)" class="btn btn-primary btn-fill btn-xs btn-icon btn-round">
+                   Επιλογή πληρωμής
+                 </button>
+               </div>
+
+
+             </div>
+
+          </div> <!-- end card -->
+
+          <hr>
+
+        </div>
+
+      </div>
+
+      <div class="col-md-4 col-sm-4" *ngIf="cartItemsCounter > 0">
+
+        <h3 class="text-center">
+          <i class="ti ti-shopping-cart"> </i>
+          Σύνοψη καλαθιού
+        </h3>
+
+        <div class="card card-with-shadow">
+          <div class="header header-with-icon">
+            <div class="icon">
+              <i class="ti-shopping-cart"></i>
+            </div>
+          </div>
+          <div class="content text-center">
+            <div>
+              <h5 class="title">
+                <a [routerLink]="['/producer', cart.shopingCartProducerOwnsTheProducts.producerID]">
+                  <i class="ti-user"> </i>
+                  Παραγωγός: {{cart.shopingCartProducerOwnsTheProducts.firstName}} {{cart.shopingCartProducerOwnsTheProducts.lastName}}
+                </a>
+              </h5>
+            </div>
+            <hr>
+
+            <div class="description" *ngFor="let cartItem of cart.shopingCartItems">
+
+              <strong>
+                <p class="text-success">
+                  <i class="ti ti-heart"> </i>
+                  {{cartItem.productName}}
+                </p>
+              </strong>
+
+              <small>
+                <p>
+                  <i class="ti ti-archive"> </i>
+
+                  Κατηγορία: <strong>{{cartItem.categoryName}}</strong>
+                </p>
+              </small>
+
+              <br>
+
+              <p>
+                <strong>{{cartItem.orderProductQuantity}}</strong>x Λίτρα:
+              </p>
+              <p>
+                <small>Υποσύνολο: </small><strong>{{cartItem.totalPrice}} &euro;</strong>
+              </p>
+              <hr>
+            </div>
+
+            <p class="description">
+              <small>
+                <strong>+ Φ.Π.Α 24%: {{ cart.tax | number : '1.2-2'}} &euro; </strong>
+              </small>
+            </p>
+
+            <h4>
+              <strong>Σύνολο: {{cart.totalCartPrice | number : '1.2-2'}} &euro;</strong>
+            </h4>
+            <hr>
+
+
+          </div>
+
+
+          <div class="card-footer btn-center text-center">
+
+            <p class="description" >
+              <strong>
+                <i class="ti ti-location-pin"></i>
+                Διεύθυνση Αποστολής:
+              </strong>
+            </p>
+
+
+            <div class="alert alert-success">
+              <div class="container">
+                <p class="text-center">
+
+                  <span>
+                    {{cart.shipingAddress.city}}, {{cart.shipingAddress.street}} {{cart.shipingAddress.streetNumber}}, Ταχ.Κωδ: {{cart.shipingAddress.postalCode}}, {{cart.shipingAddress.state}}, {{cart.shipingAddress.country}}, Όροφος: {{cart.shipingAddress.floor}}
+                  </span>
+                </p>
+              </div>
+            </div>
+
+            <hr>
+
+
+
+            <button [disabled]="!checkForSelectedPaymentMethod()" (click)="onCreateOrder()" class="btn btn-warning btn-round btn-fill btn-icon btn-move-left">
+              <i class="fa fa-chevron-right"></i>
+              Επιβεβαίωση & Πληρωμή
+            </button>
+
+
+          </div>
+
+          <div class="card-footer btn-center text-success text-center">
+
+            <a routerLink="/order">
+              <i class="ti ti-shopping-cart"></i>
+              Επιστροφή στο καλάθι
+            </a>
+
+          </div>
+
+
+        </div> <!-- end card -->
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+</div>
+
+<div class="section" *ngIf="isOk2ShowPaypalPaymentProcessScreen()">
+  <paypal-pay-order-component [shoppingCartID]="shoppingCartID"></paypal-pay-order-component>
+</div>
+
+<div class="section" *ngIf="isOk2ShowOnDeliveryPaymentProcessScreen()">
+  <cash-on-delivery-pay-order-component></cash-on-delivery-pay-order-component>
+</div>
